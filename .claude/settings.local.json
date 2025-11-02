@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm:*)",
+      "WebSearch",
+      "Bash(npx @playwright/mcp:*)",
+      "Bash(@playwright/mcp)",
+      "Bash(node:*)",
+      "Bash(claude mcp:*)",
+      "WebFetch(domain:www.reddit.com)",
+      "Bash(find:*)",
+      "Bash(git -C /Users/joono/Projects/team_race remote:*)"
+    ],
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [
+      "/opt/homebrew/lib/node_modules/@playwright/mcp"
+    ]
+  }
+}
