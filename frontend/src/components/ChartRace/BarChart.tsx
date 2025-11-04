@@ -389,7 +389,7 @@ export const BarChart = memo(function BarChart({
   return (
     <div className={clsx('relative', className)}>
       {/* Current Date Display */}
-      <div className="absolute top-4 right-4 text-slate-50 text-3xl font-bold opacity-90 transition-opacity duration-300">
+      <div className="absolute top-4 right-11 text-slate-50 text-3xl font-bold opacity-90 transition-opacity duration-300">
         {new Date(frame.date).toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'long',

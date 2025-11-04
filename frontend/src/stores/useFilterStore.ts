@@ -52,7 +52,7 @@ export const useFilterStore = create<FilterState>()(
       reset: () => set(initialState),
     }),
     {
-      name: 'team-race-filters',
+      name: 'team-race-filters-v2', // v2: Updated for new stock configuration
     }
   )
 )

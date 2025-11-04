@@ -2,8 +2,8 @@
  * Stock Tickers Configuration
  *
  * Central source of truth for all stock tickers in the Team Race project.
- * Blue Team: Future-focused sectors
- * White Team: Traditional sectors
+ * Blue Team: Future-focused sectors (미래섹터)
+ * White Team: Traditional/incumbent sectors (전통 섹터)
  */
 
 export interface StockTicker {
@@ -15,7 +15,7 @@ export interface StockTicker {
 }
 
 // ============================================================================
-// BLUE TEAM - Future-Focused Sectors
+// BLUE TEAM - Future-Focused Sectors (18 stocks)
 // ============================================================================
 
 export const BLUE_TEAM_QUANTUM: StockTicker[] = [
@@ -31,26 +31,35 @@ export const BLUE_TEAM_AEROSPACE: StockTicker[] = [
 ];
 
 export const BLUE_TEAM_LONGEVITY: StockTicker[] = [
-  { ticker: 'NTLA', name: 'Intellia Therapeutics', sector: 'Longevity Biotech', team: 'blue', category: 'longevity' },
-  { ticker: 'CRSP', name: 'CRISPR Therapeutics', sector: 'Longevity Biotech', team: 'blue', category: 'longevity' },
+  { ticker: 'NTLA', name: 'Intellia Therapeutics', sector: 'Longevity Science', team: 'blue', category: 'longevity' },
+  { ticker: 'CRSP', name: 'CRISPR Therapeutics', sector: 'Longevity Science', team: 'blue', category: 'longevity' },
 ];
 
-export const BLUE_TEAM_AI_CLOUD: StockTicker[] = [
-  { ticker: 'GOOGL', name: 'Alphabet Inc', sector: 'AI & Cloud', team: 'blue', category: 'ai' },
-  { ticker: 'MSFT', name: 'Microsoft Corporation', sector: 'AI & Cloud', team: 'blue', category: 'ai' },
-  { ticker: 'NVDA', name: 'NVIDIA Corporation', sector: 'AI & Cloud', team: 'blue', category: 'ai' },
-  { ticker: 'META', name: 'Meta Platforms', sector: 'AI & Cloud', team: 'blue', category: 'ai' },
-  { ticker: 'AMZN', name: 'Amazon.com', sector: 'AI & Cloud', team: 'blue', category: 'ai' },
+export const BLUE_TEAM_SYNTHETIC_BIOLOGY: StockTicker[] = [
+  { ticker: 'DNA', name: 'Ginkgo Bioworks', sector: 'Synthetic Biology', team: 'blue', category: 'synthetic-biology' },
+  { ticker: 'TWST', name: 'Twist Bioscience', sector: 'Synthetic Biology', team: 'blue', category: 'synthetic-biology' },
 ];
 
-export const BLUE_TEAM_SEMICONDUCTORS: StockTicker[] = [
-  { ticker: 'TSM', name: 'Taiwan Semiconductor', sector: 'Semiconductors', team: 'blue', category: 'semiconductors' },
-  { ticker: 'ASML', name: 'ASML Holding', sector: 'Semiconductors', team: 'blue', category: 'semiconductors' },
-  { ticker: 'AMD', name: 'Advanced Micro Devices', sector: 'Semiconductors', team: 'blue', category: 'semiconductors' },
+export const BLUE_TEAM_SATELLITE_COMMUNICATIONS: StockTicker[] = [
+  { ticker: 'IRDM', name: 'Iridium Communications', sector: 'Satellite Communications', team: 'blue', category: 'satellite-communications' },
+  { ticker: 'RKLB', name: 'Rocket Lab USA', sector: 'Space & Satellite', team: 'blue', category: 'satellite-communications' },
 ];
 
-export const BLUE_TEAM_ROBOTICS: StockTicker[] = [
-  { ticker: 'TSLA', name: 'Tesla Inc', sector: 'Robotics & EV', team: 'blue', category: 'robotics' },
+export const BLUE_TEAM_BCI: StockTicker[] = [
+  { ticker: 'IART', name: 'Integra Lifesciences', sector: 'Brain-Computer Interface', team: 'blue', category: 'bci' },
+  { ticker: 'HYPR', name: 'Hyperfine Inc', sector: 'Brain-Computer Interface', team: 'blue', category: 'bci' },
+];
+
+export const BLUE_TEAM_BATTERY_ESS: StockTicker[] = [
+  { ticker: 'TSLA', name: 'Tesla Inc', sector: 'Battery & ESS Platform', team: 'blue', category: 'battery-ess' },
+  { ticker: 'FLNC', name: 'Fluence Energy', sector: 'Battery & ESS Platform', team: 'blue', category: 'battery-ess' },
+  { ticker: 'QS', name: 'QuantumScape', sector: 'Battery & ESS Platform', team: 'blue', category: 'battery-ess' },
+];
+
+export const BLUE_TEAM_RENEWABLE_ENERGY: StockTicker[] = [
+  { ticker: 'NEE', name: 'NextEra Energy', sector: 'Renewable Energy', team: 'blue', category: 'renewable-energy' },
+  { ticker: 'ENPH', name: 'Enphase Energy', sector: 'Renewable Energy', team: 'blue', category: 'renewable-energy' },
+  { ticker: 'FSLR', name: 'First Solar', sector: 'Renewable Energy', team: 'blue', category: 'renewable-energy' },
 ];
 
 // Aggregate all Blue Team tickers
@@ -58,13 +67,15 @@ export const BLUE_TEAM_ALL: StockTicker[] = [
   ...BLUE_TEAM_QUANTUM,
   ...BLUE_TEAM_AEROSPACE,
   ...BLUE_TEAM_LONGEVITY,
-  ...BLUE_TEAM_AI_CLOUD,
-  ...BLUE_TEAM_SEMICONDUCTORS,
-  ...BLUE_TEAM_ROBOTICS,
+  ...BLUE_TEAM_SYNTHETIC_BIOLOGY,
+  ...BLUE_TEAM_SATELLITE_COMMUNICATIONS,
+  ...BLUE_TEAM_BCI,
+  ...BLUE_TEAM_BATTERY_ESS,
+  ...BLUE_TEAM_RENEWABLE_ENERGY,
 ];
 
 // ============================================================================
-// WHITE TEAM - Traditional Sectors
+// WHITE TEAM - Traditional & Incumbent Sectors (15 stocks)
 // ============================================================================
 
 export const WHITE_TEAM_TRADITIONAL_ENERGY: StockTicker[] = [
@@ -73,37 +84,55 @@ export const WHITE_TEAM_TRADITIONAL_ENERGY: StockTicker[] = [
   { ticker: 'COP', name: 'ConocoPhillips', sector: 'Traditional Energy', team: 'white', category: 'traditional-energy' },
 ];
 
-export const WHITE_TEAM_FUTURE_ENERGY: StockTicker[] = [
-  { ticker: 'NEE', name: 'NextEra Energy', sector: 'Future Energy', team: 'white', category: 'future-energy' },
-  { ticker: 'ENPH', name: 'Enphase Energy', sector: 'Future Energy', team: 'white', category: 'future-energy' },
-  { ticker: 'FSLR', name: 'First Solar', sector: 'Future Energy', team: 'white', category: 'future-energy' },
+export const WHITE_TEAM_PAYMENT_SYSTEMS: StockTicker[] = [
+  { ticker: 'V', name: 'Visa Inc', sector: 'Payment Systems', team: 'white', category: 'payment-systems' },
+  { ticker: 'MA', name: 'Mastercard Inc', sector: 'Payment Systems', team: 'white', category: 'payment-systems' },
+  { ticker: 'AXP', name: 'American Express', sector: 'Payment Systems', team: 'white', category: 'payment-systems' },
+  { ticker: 'PYPL', name: 'PayPal Holdings', sector: 'Payment Systems', team: 'white', category: 'payment-systems' },
 ];
 
-export const WHITE_TEAM_INDUSTRIALS: StockTicker[] = [
-  { ticker: 'CAT', name: 'Caterpillar Inc', sector: 'Industrials', team: 'white', category: 'industrials' },
-  { ticker: 'DE', name: 'Deere & Company', sector: 'Industrials', team: 'white', category: 'industrials' },
-  { ticker: 'GE', name: 'General Electric', sector: 'Industrials', team: 'white', category: 'industrials' },
+export const WHITE_TEAM_DATA_INFRASTRUCTURE: StockTicker[] = [
+  { ticker: 'GOOGL', name: 'Alphabet Inc', sector: 'Data Infrastructure', team: 'white', category: 'data-infrastructure' },
+  { ticker: 'MSFT', name: 'Microsoft Corporation', sector: 'Data Infrastructure', team: 'white', category: 'data-infrastructure' },
+  { ticker: 'META', name: 'Meta Platforms', sector: 'Data Infrastructure', team: 'white', category: 'data-infrastructure' },
+  { ticker: 'AMZN', name: 'Amazon.com', sector: 'Data Infrastructure', team: 'white', category: 'data-infrastructure' },
+  { ticker: 'NVDA', name: 'NVIDIA Corporation', sector: 'Data Infrastructure', team: 'white', category: 'data-infrastructure' },
 ];
 
-export const WHITE_TEAM_BANKS: StockTicker[] = [
-  { ticker: 'JPM', name: 'JPMorgan Chase', sector: 'Banking', team: 'white', category: 'banks' },
-  { ticker: 'BAC', name: 'Bank of America', sector: 'Banking', team: 'white', category: 'banks' },
-  { ticker: 'WFC', name: 'Wells Fargo', sector: 'Banking', team: 'white', category: 'banks' },
+export const WHITE_TEAM_FINANCIAL_INSTITUTIONS: StockTicker[] = [
+  { ticker: 'JPM', name: 'JPMorgan Chase', sector: 'Financial Institutions', team: 'white', category: 'financial-institutions' },
+  { ticker: 'BLK', name: 'BlackRock Inc', sector: 'Asset Management', team: 'white', category: 'financial-institutions' },
+  { ticker: 'GS', name: 'Goldman Sachs', sector: 'Financial Institutions', team: 'white', category: 'financial-institutions' },
 ];
 
-export const WHITE_TEAM_CONSUMER_GOODS: StockTicker[] = [
-  { ticker: 'PG', name: 'Procter & Gamble', sector: 'Consumer Goods', team: 'white', category: 'consumer-goods' },
-  { ticker: 'KO', name: 'Coca-Cola Company', sector: 'Consumer Goods', team: 'white', category: 'consumer-goods' },
-  { ticker: 'PEP', name: 'PepsiCo Inc', sector: 'Consumer Goods', team: 'white', category: 'consumer-goods' },
+export const WHITE_TEAM_ESSENTIAL_CONSUMER_GOODS: StockTicker[] = [
+  { ticker: 'WMT', name: 'Walmart Inc', sector: 'Essential Consumer Goods', team: 'white', category: 'essential-consumer' },
+  { ticker: 'PG', name: 'Procter & Gamble', sector: 'Essential Consumer Goods', team: 'white', category: 'essential-consumer' },
+  { ticker: 'KO', name: 'Coca-Cola Company', sector: 'Essential Consumer Goods', team: 'white', category: 'essential-consumer' },
+  { ticker: 'PEP', name: 'PepsiCo Inc', sector: 'Essential Consumer Goods', team: 'white', category: 'essential-consumer' },
+  { ticker: 'JNJ', name: 'Johnson & Johnson', sector: 'Essential Consumer Goods', team: 'white', category: 'essential-consumer' },
+];
+
+export const WHITE_TEAM_LUXURY_GOODS: StockTicker[] = [
+  { ticker: 'EL', name: 'Estée Lauder', sector: 'Luxury Consumer Goods', team: 'white', category: 'luxury-goods' },
+  { ticker: 'CPRI', name: 'Capri Holdings', sector: 'Luxury Consumer Goods', team: 'white', category: 'luxury-goods' },
+];
+
+export const WHITE_TEAM_WATER_FOOD: StockTicker[] = [
+  { ticker: 'AWK', name: 'American Water Works', sector: 'Water & Food Security', team: 'white', category: 'water-food' },
+  { ticker: 'ADM', name: 'Archer-Daniels-Midland', sector: 'Water & Food Security', team: 'white', category: 'water-food' },
+  { ticker: 'CTVA', name: 'Corteva Inc', sector: 'Water & Food Security', team: 'white', category: 'water-food' },
 ];
 
 // Aggregate all White Team tickers
 export const WHITE_TEAM_ALL: StockTicker[] = [
   ...WHITE_TEAM_TRADITIONAL_ENERGY,
-  ...WHITE_TEAM_FUTURE_ENERGY,
-  ...WHITE_TEAM_INDUSTRIALS,
-  ...WHITE_TEAM_BANKS,
-  ...WHITE_TEAM_CONSUMER_GOODS,
+  ...WHITE_TEAM_PAYMENT_SYSTEMS,
+  ...WHITE_TEAM_DATA_INFRASTRUCTURE,
+  ...WHITE_TEAM_FINANCIAL_INSTITUTIONS,
+  ...WHITE_TEAM_ESSENTIAL_CONSUMER_GOODS,
+  ...WHITE_TEAM_LUXURY_GOODS,
+  ...WHITE_TEAM_WATER_FOOD,
 ];
 
 // ============================================================================
@@ -205,13 +234,13 @@ export const isValidTicker = (ticker: string): boolean => {
 // ============================================================================
 
 export const TEAM_NAMES = {
-  blue: 'Blue Team',
-  white: 'White Team',
+  blue: 'Blue Team (청팀)',
+  white: 'White Team (백팀)',
 } as const;
 
 export const TEAM_DESCRIPTIONS = {
-  blue: 'Future-focused sectors: Quantum, AI, Aerospace, Longevity',
-  white: 'Traditional sectors: Energy, Industrials, Banks, Consumer Goods',
+  blue: 'Future-focused sectors: Quantum, Aerospace, Longevity, Synthetic Biology, Satellite, BCI, Battery, Renewable',
+  white: 'Traditional/incumbent sectors: Energy, Payment Systems, Data Infrastructure, Financial, Consumer, Luxury, Water & Food',
 } as const;
 
 export const TOTAL_STOCKS_COUNT = ALL_TICKERS.length;

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type PlaybackSpeed = 0.5 | 1 | 2 | 5 | 10
+export type PlaybackSpeed = 0.2 | 0.5 | 1
 
 interface PlaybackState {
   // State
@@ -23,7 +23,7 @@ interface PlaybackState {
 
 const initialState = {
   isPlaying: false,
-  speed: 1 as PlaybackSpeed,
+  speed: 0.5 as PlaybackSpeed,
   currentIndex: 0,
   currentDate: null as string | null,
 }

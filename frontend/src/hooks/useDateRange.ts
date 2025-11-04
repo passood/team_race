@@ -84,6 +84,11 @@ export const useDateRange = (): UseDateRangeReturn => {
   // Check if a date is within the selected range
   const isDateInRange = useMemo(() => {
     return (dateString: string): boolean => {
+      // If no date range is set, accept all dates
+      if (!dateRange) {
+        return true;
+      }
+
       if (!validation.isValid || !startDate || !endDate) {
         return false;
       }
@@ -97,7 +102,7 @@ export const useDateRange = (): UseDateRangeReturn => {
         return false;
       }
     };
-  }, [validation.isValid, startDate, endDate]);
+  }, [dateRange, validation.isValid, startDate, endDate]);
 
   return {
     dateRange,

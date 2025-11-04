@@ -32,6 +32,7 @@ function HomePage() {
   // Get playback state and actions from store
   const {
     currentIndex,
+    speed,
     setCurrentDate,
     reset,
   } = usePlaybackStore()
@@ -94,12 +95,17 @@ function HomePage() {
     width: 1200,
     height: 600,
     margin: {
-      top: 20,
+      top: 60,
       right: 120,
       bottom: 40,
       left: 200,
     },
   }
+
+  // Calculate animation duration based on playback speed
+  // Same formula as useAnimationLoop: BASE_FRAME_DURATION (500ms) / speed
+  // This ensures D3.js transitions sync with frame advancement timing
+  const animationDuration = 500 / speed
 
   return (
     <MainLayout>
@@ -131,7 +137,7 @@ function HomePage() {
                 frame={currentFrame}
                 dimensions={chartDimensions}
                 animationConfig={{
-                  duration: 750,
+                  duration: animationDuration,
                   easing: 'easeCubicInOut',
                 }}
               />

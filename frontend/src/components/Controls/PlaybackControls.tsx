@@ -5,7 +5,7 @@ import { usePlaybackStore } from '@/stores/usePlaybackStore';
 import { Button } from '@/components/UI/Button';
 import { clsx } from 'clsx';
 
-const SPEED_OPTIONS = [0.5, 1, 2, 5, 10] as const;
+const SPEED_OPTIONS = [0.2, 0.5, 1] as const;
 
 interface PlaybackControlsProps {
   totalFrames?: number;
