@@ -1,0 +1,293 @@
+{
+  "skills": {
+    "frontend-dev-guidelines": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": [
+          "frontend",
+          "react",
+          "component",
+          "tanstack",
+          "query",
+          "router",
+          "zustand",
+          "tailwind",
+          "vite",
+          "tsx",
+          "jsx"
+        ],
+        "intentPatterns": [
+          "(create|add|build|make).*(component|page|route)",
+          "(how to|best practice).*(react|frontend|component)",
+          "(style|styling|css|tailwind)",
+          "(state management|zustand|store)",
+          "(data fetching|api call|query)",
+          "(routing|navigation|link)"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "frontend/src/**/*.tsx",
+          "frontend/src/**/*.ts",
+          "frontend/src/components/**/*",
+          "frontend/src/pages/**/*",
+          "frontend/src/hooks/**/*"
+        ],
+        "contentPatterns": [
+          "import.*from ['\"]react['\"]",
+          "import.*@tanstack",
+          "import.*zustand",
+          "className=",
+          "export.*React\\.FC"
+        ]
+      }
+    },
+
+    "backend-dev-guidelines": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": [
+          "backend",
+          "api",
+          "endpoint",
+          "controller",
+          "service",
+          "repository",
+          "express",
+          "route",
+          "middleware"
+        ],
+        "intentPatterns": [
+          "(create|add|build).*(route|endpoint|controller|service)",
+          "(how to|best practice).*(backend|api|endpoint)",
+          "(error handling|try catch|throw)",
+          "(cache|caching|node-cache)"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "backend/**/*.ts",
+          "backend/**/routes/**/*",
+          "backend/**/controllers/**/*",
+          "backend/**/services/**/*",
+          "backend/**/repositories/**/*"
+        ],
+        "contentPatterns": [
+          "import.*express",
+          "Router\\(",
+          "export.*Controller",
+          "export.*Service",
+          "export.*Repository",
+          "app\\.use",
+          "app\\.get|app\\.post|app\\.put|app\\.delete"
+        ]
+      }
+    },
+
+    "d3-visualization-guidelines": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": [
+          "d3",
+          "d3.js",
+          "visualization",
+          "chart",
+          "chart race",
+          "animation",
+          "svg",
+          "transition",
+          "easing",
+          "60fps",
+          "performance"
+        ],
+        "intentPatterns": [
+          "(create|build|implement).*(chart|animation|visualization)",
+          "(how to|best practice).*(d3|animation|chart race)",
+          "(performance|optimize|60fps)",
+          "(transition|easing|smooth)"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "frontend/src/components/ChartRace/**/*",
+          "frontend/src/**/*Chart*.tsx",
+          "frontend/src/**/*Animation*.tsx"
+        ],
+        "contentPatterns": [
+          "import.*d3",
+          "d3\\.select",
+          "d3\\.transition",
+          "requestAnimationFrame",
+          "\\.ease\\(",
+          "svgRef"
+        ]
+      }
+    },
+
+    "data-service-guidelines": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": [
+          "yahoo finance",
+          "stock data",
+          "market data",
+          "ticker",
+          "financial data",
+          "data service",
+          "api integration"
+        ],
+        "intentPatterns": [
+          "(fetch|get|retrieve).*(stock|market|financial) data",
+          "(yahoo finance|yfinance)",
+          "(how to|best practice).*(data fetching|api integration)",
+          "(cache|caching).*(stock|market) data",
+          "(batch|parallel).*(fetch|request)"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "backend/data-service/**/*",
+          "backend/**/StockRepository.ts",
+          "backend/**/StockService.ts"
+        ],
+        "contentPatterns": [
+          "import.*yahoo-finance",
+          "yahooFinance",
+          "yfinance",
+          "marketCap",
+          "ticker:",
+          "OHLCV"
+        ]
+      }
+    },
+
+    "testing-guidelines": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": [
+          "test",
+          "testing",
+          "vitest",
+          "playwright",
+          "e2e",
+          "unit test",
+          "integration test",
+          "mock",
+          "coverage"
+        ],
+        "intentPatterns": [
+          "(write|create|add).*(test|spec)",
+          "(how to|best practice).*(test|testing)",
+          "(mock|stub|spy)",
+          "(test coverage|coverage report)"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "**/*.test.ts",
+          "**/*.test.tsx",
+          "**/*.spec.ts",
+          "**/*.spec.tsx",
+          "**/tests/**/*",
+          "**/test/**/*"
+        ],
+        "contentPatterns": [
+          "import.*vitest",
+          "import.*@testing-library",
+          "describe\\(",
+          "it\\(",
+          "test\\(",
+          "expect\\("
+        ]
+      }
+    },
+
+    "skill-developer": {
+      "type": "meta",
+      "enforcement": "suggest",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": [
+          "create skill",
+          "new skill",
+          "skill development",
+          "skill structure",
+          "progressive disclosure"
+        ],
+        "intentPatterns": [
+          "(create|make|write|develop).*(skill|guideline)",
+          "(how to|best practice).*(skill|resource file)",
+          "skill.*structure",
+          "progressive disclosure"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          ".claude/skills/**/*.md",
+          ".claude/skills/resources/**/*.md"
+        ],
+        "contentPatterns": [
+          "# .*Guidelines",
+          "\\*\\*Purpose\\*\\*:",
+          "## Resource Files"
+        ]
+      }
+    }
+  },
+
+  "activationConfig": {
+    "maxSkillsPerPrompt": 3,
+    "priorityWeighting": {
+      "high": 10,
+      "medium": 5,
+      "low": 1
+    },
+    "matchScoring": {
+      "keywordMatch": 3,
+      "intentPatternMatch": 5,
+      "filePathMatch": 4,
+      "contentPatternMatch": 6
+    }
+  },
+
+  "displayTemplates": {
+    "activationMessage": "🎯 SKILL ACTIVATION CHECK\n\nDetected topics: {topics}\n\nSuggested skills:\n{skills}\n\nThese skills are automatically loaded to help guide implementation.",
+
+    "skillListItem": "  - {skillName}: {reason}",
+
+    "noActivation": "No specific skills activated. Using general coding guidelines."
+  },
+
+  "examples": {
+    "frontend-component": {
+      "prompt": "Create a StockCard component that displays stock ticker, price, and change percentage",
+      "expectedSkills": ["frontend-dev-guidelines"],
+      "reason": "Keyword matches: component, Creating React component"
+    },
+    "d3-chart": {
+      "prompt": "Implement the chart race animation with smooth 60fps transitions",
+      "expectedSkills": ["frontend-dev-guidelines", "d3-visualization-guidelines"],
+      "reason": "Keywords: chart race, animation, 60fps. File context: D3.js visualization"
+    },
+    "backend-api": {
+      "prompt": "Add a new endpoint to fetch historical stock data from Yahoo Finance",
+      "expectedSkills": ["backend-dev-guidelines", "data-service-guidelines"],
+      "reason": "Keywords: endpoint, stock data, Yahoo Finance. Backend API development"
+    },
+    "full-stack": {
+      "prompt": "Build a feature to compare two stocks side by side with their charts",
+      "expectedSkills": ["frontend-dev-guidelines", "backend-dev-guidelines", "d3-visualization-guidelines"],
+      "reason": "Full-stack feature: frontend components + backend API + D3 charts"
+    }
+  }
+}

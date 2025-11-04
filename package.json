@@ -1,0 +1,36 @@
+{
+  "name": "team-race",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Stock Sector Chart Race Visualization - Full-stack web application",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "test": "cd frontend && npm run test",
+    "lint": "cd frontend && npm run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "clean": "rm -rf node_modules frontend/node_modules",
+    "fetch-stock-data": "tsx scripts/fetch-stock-data.ts"
+  },
+  "keywords": [
+    "stock",
+    "visualization",
+    "d3",
+    "react",
+    "chart-race",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "prettier": "^3.2.5",
+    "tsx": "^4.20.6",
+    "typescript": "^5.3.3",
+    "yahoo-finance2": "^3.10.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

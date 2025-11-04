@@ -175,18 +175,25 @@
 - **날짜 처리**: date-fns
 - **아이콘**: Lucide React or React Icons
 
-### 5.2 Backend
+### 5.2 Data Infrastructure (Serverless)
 
-- **옵션 1 (권장)**: Node.js + Express
+- **Data Fetching**: GitHub Actions + TypeScript
+  - Daily cron job (10 PM UTC, after US market close)
+  - `yahoo-finance2` npm package for Yahoo Finance API
+  - Batch processing (5 stocks at a time)
+  - 3-retry logic with exponential backoff
+  - Generates static JSON files
 
-  - TypeScript
-  - REST API
-  - Node-cache (메모리 캐싱)
+- **Data Storage**: Static JSON Files
+  - Stored in `frontend/public/data/`
+  - `stocks-latest.json`: Latest data (~9.6MB)
+  - `stocks-YYYY-MM-DD.json`: Dated archives
+  - `metadata.json`: Update timestamps and counts
 
-- **옵션 2**: Python + FastAPI
-  - Async/await 지원
-  - Pandas (데이터 처리)
-  - APScheduler (스케줄링)
+- **No Traditional Backend**:
+  - Zero server infrastructure
+  - Zero hosting costs
+  - Infinite scalability via CDN
 
 ### 5.3 데이터 소스
 
@@ -198,21 +205,21 @@
 
 ### 5.4 배포
 
-- **Frontend**: Vercel
-
+- **Frontend + Data**: Vercel / Netlify / Cloudflare Pages
   - 자동 CI/CD
-  - Edge Network
-  - 환경 변수 관리
+  - Global CDN (Edge Network)
+  - Static JSON files served from CDN
+  - Zero backend infrastructure
 
-- **Backend**: Railway
-  - 자동 배포
-  - 환경 변수 관리
-  - 로그 모니터링
+- **Data Updates**: GitHub Actions
+  - Automated daily cron job
+  - Manual trigger available
+  - Commits updated JSON files to repository
 
 ### 5.5 개발 도구
 
 - **버전 관리**: Git + GitHub
-- **패키지 관리**: pnpm (Frontend), pip (Backend)
+- **패키지 관리**: npm (Frontend + Scripts)
 - **코드 포맷팅**: Prettier, ESLint
 - **타입 체킹**: TypeScript
 
@@ -342,103 +349,99 @@
 
 ---
 
-## 8. API 설계
+## 8. 데이터 접근 설계 (Serverless)
 
-### 8.1 엔드포인트
+### 8.1 정적 JSON 파일 구조
 
-#### GET `/api/stocks/list`
+#### `/data/stocks-latest.json`
 
-청팀/백팀 전체 종목 리스트 조회
+전체 종목의 최신 데이터 (5년 히스토리 포함)
 
 ```json
-Response:
-{
-  "blue_team": [
-    {
-      "ticker": "IONQ",
-      "name": "IonQ Inc.",
-      "sector": "양자 컴퓨터",
-      "rank": 1
+[
+  {
+    "ticker": "IONQ",
+    "name": "IonQ Inc",
+    "sector": "Quantum Computing",
+    "team": "blue",
+    "category": "quantum",
+    "history": [
+      {
+        "date": "2021-01-04",
+        "open": 11.125,
+        "high": 11.25,
+        "low": 10.5,
+        "close": 10.80,
+        "volume": 150500,
+        "adjClose": 10.80
+      },
+      ...
+    ],
+    "financials": {
+      "debtToEquity": 0.09,
+      "currentRatio": 1.73,
+      "marketCap": 788000000000,
+      "lastUpdated": "2025-11-03"
     }
-  ],
-  "white_team": [...]
-}
+  },
+  ...
+]
 ```
 
-#### GET `/api/stocks/history`
+#### `/data/metadata.json`
 
-특정 기간 동안의 시계열 데이터 조회
-
-```
-Query Parameters:
-- tickers: TSLA,GOOGL,AMZN (comma-separated)
-- start_date: 2024-01-01
-- end_date: 2024-12-31
-- interval: 1d (1d, 1wk, 1mo)
-
-Response:
-{
-  "TSLA": [
-    {
-      "date": "2024-01-01",
-      "close": 248.42,
-      "marketCap": 788000000000
-    }
-  ]
-}
-```
-
-#### GET `/api/stocks/financials`
-
-재무 지표 조회
-
-```
-Query Parameters:
-- tickers: TSLA,GOOGL,AMZN
-
-Response:
-{
-  "TSLA": {
-    "debtToEquity": 0.09,
-    "currentRatio": 1.73,
-    "lastUpdated": "2024-12-31"
-  }
-}
-```
-
-#### GET `/api/stocks/compare`
-
-청팀 vs 백팀 비교 데이터
-
-```
-Query Parameters:
-- start_date: 2024-01-01
-- end_date: 2024-12-31
-
-Response:
-{
-  "blue_team_avg": [...],
-  "white_team_avg": [...],
-  "correlation": 0.72
-}
-```
-
-### 8.2 에러 처리
+데이터 메타정보
 
 ```json
 {
-  "error": {
-    "code": "INVALID_TICKER",
-    "message": "유효하지 않은 티커 심볼입니다",
-    "details": ["INVALID_SYMBOL"]
-  }
+  "lastUpdated": "2025-11-03T14:03:33.790Z",
+  "dateRange": {
+    "start": "2020-11-03",
+    "end": "2025-11-03"
+  },
+  "totalStocks": 32,
+  "successfulStocks": 32,
+  "failedStocks": 0,
+  "blueTeamCount": 17,
+  "whiteTeamCount": 15
 }
 ```
 
-### 8.3 Rate Limiting
+### 8.2 Frontend API Layer
 
-- 사용자당 100 요청/시간
-- IP당 1000 요청/일
+#### `getAllStocks(): Promise<StockData[]>`
+최신 주식 데이터 전체 조회
+
+#### `getStocksByDate(date: string): Promise<StockData[]>`
+특정 날짜의 주식 데이터 조회 (아카이브)
+
+#### `getStockMetadata(): Promise<StockMetadata>`
+데이터 메타정보 조회
+
+#### Utility Functions
+- `filterStocksByTeam(stocks, team)`: 팀별 필터링
+- `filterStocksByCategory(stocks, category)`: 카테고리별 필터링
+- `filterHistoricalDataByDateRange(stocks, start, end)`: 기간별 필터링
+- `calculateTeamMarketCap(stocks, team)`: 팀별 시가총액 계산
+
+### 8.3 캐싱 전략
+
+- **TanStack Query 설정**:
+  - `staleTime: Infinity` (데이터는 일일 업데이트)
+  - `cacheTime: Infinity` (브라우저 세션 동안 유지)
+  - `refetchOnWindowFocus: false` (포커스 시 재조회 안 함)
+
+- **CDN 캐싱**: 정적 파일이므로 CDN 엣지에서 캐싱
+- **브라우저 캐싱**: 적절한 Cache-Control 헤더 설정
+
+### 8.4 데이터 업데이트 프로세스
+
+1. **GitHub Actions** (매일 10 PM UTC)
+2. **fetch-stock-data.ts** 실행
+3. Yahoo Finance API에서 32개 종목 데이터 수집
+4. JSON 파일 생성 (stocks-latest.json, stocks-YYYY-MM-DD.json)
+5. Git 커밋 및 푸시
+6. Vercel/Netlify 자동 재배포 (새로운 JSON 파일 포함)
 
 ---
 
@@ -482,64 +485,63 @@ Response:
 
 ## 10. 개발 단계 및 마일스톤
 
-### Phase 1: 프로젝트 설정 및 기초 작업 (1주)
+### Phase 1: 프로젝트 설정 및 데이터 인프라 (1주) ✅ Complete
 
-- [x] 프로젝트 구조 설정 (Vite + React, Express/FastAPI)
+- [x] 프로젝트 구조 설정 (Vite + React, Serverless)
 - [x] 디자인 시스템 및 TailwindCSS 설정
-- [x] 청팀/백팀 종목 리스트 정리 및 DB 스키마 설계
-- [x] Yahoo Finance API 연동 테스트
+- [x] 청팀/백팀 종목 리스트 정리 (shared/config/stock-tickers.ts)
+- [x] Yahoo Finance API 연동 (yahoo-finance2)
+- [x] GitHub Actions 워크플로우 생성 (일일 데이터 수집)
+- [x] 데이터 수집 스크립트 (scripts/fetch-stock-data.ts)
+- [x] Frontend API 레이어 (frontend/src/services/stockApi.ts)
+- [x] 정적 JSON 파일 생성 테스트 (성공)
 
-### Phase 2: 백엔드 개발 (2주)
+### Phase 2: 프론트엔드 - 기본 UI (2주)
 
-- [ ] `/api/stocks/list` 엔드포인트 구현
-- [ ] `/api/stocks/history` 엔드포인트 구현
-- [ ] `/api/stocks/financials` 엔드포인트 구현
-- [ ] `/api/stocks/compare` 엔드포인트 구현
-- [ ] 데이터 캐싱 로직 구현
-- [ ] 에러 핸들링 및 로깅
-- [ ] API 문서 작성 (Swagger/OpenAPI)
-
-### Phase 3: 프론트엔드 - 기본 UI (2주)
-
+- [ ] 프로젝트 초기 설정 (Vite, React, TypeScript)
+- [ ] 라우팅 설정 (TanStack Router)
 - [ ] 헤더 및 레이아웃 구조
 - [ ] 컨트롤 패널 (기간 선택, 섹터 필터, 속도 조절)
 - [ ] 타임라인 컨트롤
-- [ ] API 연동 및 상태 관리
+- [ ] 상태 관리 (Zustand)
+- [ ] 데이터 로딩 (TanStack Query with Infinity cache)
 - [ ] 로딩 및 에러 상태 UI
 
-### Phase 4: D3.js 차트 레이스 구현 (3주)
+### Phase 3: D3.js 차트 레이스 구현 (3주)
 
 - [ ] 기본 차트 레이스 애니메이션
-- [ ] 순위 변경 애니메이션
-- [ ] 색상 및 아이콘 시스템
+- [ ] 순위 변경 애니메이션 (60fps 보장)
+- [ ] 색상 및 아이콘 시스템 (Blue Team vs White Team)
 - [ ] 호버 및 클릭 인터랙션
 - [ ] 재생/일시정지/속도 조절 기능
 - [ ] 반응형 차트 (모바일 대응)
 
-### Phase 5: 상세 정보 및 비교 분석 (1주)
+### Phase 4: 상세 정보 및 비교 분석 (1주)
 
 - [ ] 종목 상세 정보 모달/사이드바
 - [ ] 청팀 vs 백팀 비교 차트
 - [ ] 섹터별 성과 히트맵
 - [ ] 상관관계 분석 시각화
 
-### Phase 6: 최적화 및 테스트 (1주)
+### Phase 5: 최적화 및 테스트 (1주)
 
-- [ ] 성능 최적화 (lazy loading, memoization)
+- [ ] 성능 최적화 (lazy loading, memoization, code splitting)
 - [ ] 크로스 브라우저 테스트
-- [ ] 접근성 테스트 및 개선
-- [ ] 단위 테스트 작성
+- [ ] 접근성 테스트 및 개선 (WCAG 2.1 AA)
+- [ ] 단위 테스트 작성 (Vitest)
 - [ ] E2E 테스트 (Playwright)
 
-### Phase 7: 배포 및 운영 (1주)
+### Phase 6: 배포 (1주)
 
-- [ ] Vercel 프론트엔드 배포
-- [ ] Railway 백엔드 배포
-- [ ] CI/CD 파이프라인 설정
-- [ ] 모니터링 설정 (Sentry, Analytics)
+- [ ] Vercel/Netlify 배포 설정
+- [ ] GitHub Actions CI/CD 파이프라인
+- [ ] 환경 변수 설정
+- [ ] 성능 모니터링 (Sentry, Analytics)
 - [ ] 사용자 피드백 수집 체계 구축
 
-**총 예상 기간: 11주**
+**총 예상 기간: 8주 (11주에서 3주 단축)**
+
+**절감된 시간**: 백엔드 개발 2주 제거, 배포 복잡도 감소로 1주 절감
 
 ---
 

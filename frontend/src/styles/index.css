@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Dark theme defaults */
+  body {
+    @apply bg-slate-900 text-slate-50 antialiased;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Improved typography baseline */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold leading-tight;
+  }
+
+  /* Better focus outlines */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-blue-team-500 ring-offset-2 ring-offset-slate-900;
+  }
+
+  /* Smooth transitions for all interactive elements */
+  button, a, input, select, textarea {
+    @apply transition-all duration-200 ease-in-out;
+  }
+}
+
+@layer components {
+  /* Section spacing utility */
+  .section-spacing {
+    @apply py-6 md:py-8;
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200;
+  }
+
+  /* Skeleton loading animation */
+  .skeleton {
+    @apply animate-pulse bg-slate-700 rounded;
+  }
+
+  /* Focus ring for custom elements */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-team-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900;
+  }
+}
+
+@layer utilities {
+  /* Text gradient utilities */
+  .text-gradient-blue {
+    @apply bg-gradient-to-r from-blue-team-400 to-blue-team-600 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-white {
+    @apply bg-gradient-to-r from-white-team-300 to-white-team-500 bg-clip-text text-transparent;
+  }
+
+  /* Smooth hover scale */
+  .hover-scale {
+    @apply hover:scale-105 transition-transform duration-200;
+  }
+}

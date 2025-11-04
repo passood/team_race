@@ -9,7 +9,15 @@
       "Bash(claude mcp:*)",
       "WebFetch(domain:www.reddit.com)",
       "Bash(find:*)",
-      "Bash(git -C /Users/joono/Projects/team_race remote:*)"
+      "Bash(git -C /Users/joono/Projects/team_race remote:*)",
+      "Bash(tree:*)",
+      "Bash(test:*)",
+      "Bash(pnpm add:*)",
+      "Bash(npx tsx:*)",
+      "Bash(cat:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(pkill:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": [],

@@ -1,0 +1,12 @@
+{
+  "lastUpdated": "2025-11-03T14:03:33.790Z",
+  "dateRange": {
+    "start": "2020-11-03",
+    "end": "2025-11-03"
+  },
+  "totalStocks": 32,
+  "successfulStocks": 32,
+  "failedStocks": 0,
+  "blueTeamCount": 17,
+  "whiteTeamCount": 15
+}
