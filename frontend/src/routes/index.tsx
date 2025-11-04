@@ -5,7 +5,6 @@ import { ControlPanel } from '@/components/Controls/ControlPanel'
 import { BarChart } from '@/components/ChartRace/BarChart'
 import type { ChartDimensions } from '@/components/ChartRace/types'
 import { Card } from '@/components/UI/Card'
-import { Button } from '@/components/UI/Button'
 import { useFilteredStocks } from '@/hooks/useFilteredStocks'
 import { useDateRange } from '@/hooks/useDateRange'
 import { useFilterStore } from '@/stores/useFilterStore'
@@ -19,7 +18,6 @@ import {
   getFrameByIndex,
   getTotalFrames,
 } from '@/utils/chartRaceData'
-import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   component: HomePage,
@@ -35,8 +33,6 @@ function HomePage() {
   const {
     currentIndex,
     setCurrentDate,
-    previousFrame,
-    nextFrame,
     reset,
   } = usePlaybackStore()
 
@@ -131,53 +127,14 @@ function HomePage() {
         {stocks && !isLoading && !error && (
           <Card>
             {currentFrame ? (
-              <>
-                <BarChart
-                  frame={currentFrame}
-                  dimensions={chartDimensions}
-                  animationConfig={{
-                    duration: 750,
-                    easing: 'easeCubicInOut',
-                  }}
-                />
-
-                {/* Frame Navigation Controls */}
-                <div className="mt-6 flex items-center justify-center gap-4">
-                  <Button
-                    onClick={previousFrame}
-                    disabled={currentIndex === 0}
-                    variant="secondary"
-                    size="sm"
-                  >
-                    <ChevronLeft className="w-4 h-4 mr-1" />
-                    Previous
-                  </Button>
-
-                  <div className="text-center min-w-[200px]">
-                    <p className="text-slate-300 text-sm font-medium">
-                      Frame {currentIndex + 1} of {totalFrames}
-                    </p>
-                    <p className="text-slate-500 text-xs mt-1">
-                      {currentFrame.date}
-                    </p>
-                  </div>
-
-                  <Button
-                    onClick={nextFrame}
-                    disabled={currentIndex >= totalFrames - 1}
-                    variant="secondary"
-                    size="sm"
-                  >
-                    Next
-                    <ChevronRight className="w-4 h-4 ml-1" />
-                  </Button>
-
-                  <Button onClick={reset} variant="ghost" size="sm">
-                    <RotateCcw className="w-4 h-4 mr-1" />
-                    Reset
-                  </Button>
-                </div>
-              </>
+              <BarChart
+                frame={currentFrame}
+                dimensions={chartDimensions}
+                animationConfig={{
+                  duration: 750,
+                  easing: 'easeCubicInOut',
+                }}
+              />
             ) : (
               <div className="py-12 text-center text-slate-400">
                 <p className="text-lg mb-2">No data available for chart</p>
